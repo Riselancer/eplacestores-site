@@ -43,6 +43,8 @@
   --accent: #8C6200; --accent-soft: #F6EED9; --warn: #8C6200;
   --band: #121212; --band-2: #1C1C1C; --band-fg: #F5F3EE; --band-soft: #B4AFA4; --band-line: #2E2D2A;
   --band-accent: #E2B34A; --band-pill: #3A2F14;
+  --gold: #E2B34A; --on-gold: #121212; --on-gold-soft: #4A3D1E; --on-gold-line: #C49433;
+  --wa: #25D366; --on-wa: #062A14;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -79,6 +81,7 @@ p { margin: 0; }
 .nav a:hover { color: var(--band-fg); }
 .top .btn { padding: 11px 16px; font-size: 15px; }
 @media (max-width: 900px) { .nav { display: none; } }
+@media (max-width: 520px) { .logo small { display: none; } .top .btn { white-space: nowrap; padding: 10px 13px; font-size: 14px; } }
 
 /* hero */
 .hero { background: var(--band); color: var(--band-fg); padding-block: clamp(56px, 8vw, 96px) clamp(64px, 9vw, 104px); }
@@ -91,6 +94,12 @@ p { margin: 0; }
 .ticks { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; font-size: 14px; color: var(--band-soft); padding: 0; list-style: none; }
 .ticks li::before { content: "✓"; color: var(--band-accent); margin-right: 7px; font-weight: 700; }
 @media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; } }
+.platforms { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--band-line); display: grid; gap: 12px; }
+.platforms > span { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--band-soft); }
+.platforms ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.platforms li { display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; border: 1px solid var(--band-line); border-radius: 99px; font: 700 15px/1 var(--display); color: var(--band-fg); background: var(--band-2); }
+.platforms li.main { background: var(--band-accent); border-color: var(--band-accent); color: var(--on-gold); }
+.platforms small { font: 500 10px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; opacity: .75; }
 
 /* health card */
 .health { background: var(--band-2); border: 1px solid var(--band-line); border-radius: 14px; padding: 22px; font-size: 14px; min-width: 0; }
@@ -105,24 +114,26 @@ p { margin: 0; }
 .metric small { grid-column: 1 / -1; color: var(--band-soft); font: 400 12px/1.3 var(--mono); }
 .health-note { margin-top: 14px; font: 400 12px/1.4 var(--mono); color: var(--band-soft); }
 
-/* numbers */
-.stats { background: var(--bg); border-bottom: 1px solid var(--line); }
-.stats .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
-.stat { padding: 30px 20px 30px 0; display: grid; gap: 4px; }
-.stat + .stat { padding-left: 24px; border-left: 1px solid var(--line); }
-.stat b { font: 700 clamp(30px, 3.6vw, 42px)/1 var(--display); font-variant-numeric: tabular-nums; }
-.stat span { color: var(--fg-soft); font-size: 15px; }
+/* numbers: gold band */
+.stats { background: var(--gold); color: var(--on-gold); }
+.stats .wrap { display: grid; grid-template-columns: repeat(4, 1fr); padding-block: 14px; }
+.stat { padding: 30px 20px; display: grid; gap: 6px; text-align: center; }
+.stat + .stat { border-left: 1px solid var(--on-gold-line); }
+.stat b { font: 700 clamp(36px, 4.4vw, 54px)/1 var(--display); font-variant-numeric: tabular-nums; }
+.stat span { color: var(--on-gold-soft); font-size: 15px; font-weight: 600; }
 @media (max-width: 760px) {
-  .stats .wrap { grid-template-columns: 1fr 1fr; }
-  .stat, .stat + .stat { padding: 22px 12px; border-left: 0; }
-  .stat:nth-child(even) { border-left: 1px solid var(--line); padding-left: 18px; }
-  .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .stats .wrap { grid-template-columns: 1fr 1fr; padding-block: 6px; }
+  .stat { padding: 22px 10px; }
+  .stat + .stat { border-left: 0; }
+  .stat:nth-child(even) { border-left: 1px solid var(--on-gold-line); }
+  .stat:nth-child(-n+2) { border-bottom: 1px solid var(--on-gold-line); }
 }
 
 /* problems */
 .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
 .problem { border: 1px solid var(--line); border-radius: var(--r); padding: 26px; display: grid; gap: 12px; align-content: start; background: var(--bg); min-width: 0; }
-.problem .tag { font: 500 12px/1 var(--mono); color: var(--warn); letter-spacing: .05em; text-transform: uppercase; }
+.problem .tag { justify-self: start; font: 500 12px/1 var(--mono); color: var(--accent); background: var(--accent-soft); padding: 7px 10px; border-radius: 99px; letter-spacing: .05em; text-transform: uppercase; }
+.problem:hover { border-color: var(--gold); }
 .problem p { color: var(--fg-soft); }
 .problem a { font-weight: 600; color: var(--accent); text-decoration: none; }
 .problem a:hover { text-decoration: underline; }
@@ -139,12 +150,17 @@ p { margin: 0; }
   .svc, .svc:not(:nth-child(3n+1)) { padding: 22px 0; border-left: 0; }
 }
 
-/* process */
-.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; counter-reset: step; list-style: none; padding: 0; margin: 0; }
-.step { counter-increment: step; display: grid; gap: 10px; align-content: start; padding-top: 18px; border-top: 3px solid var(--fg); min-width: 0; }
-.step::before { content: "Step " counter(step); font: 500 13px/1 var(--mono); color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
-.step p { color: var(--fg-soft); font-size: 16px; }
-@media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; } }
+/* process: dark timeline */
+.section.dark { background: var(--band); color: var(--band-fg); }
+.section.dark .eyebrow { color: var(--band-accent); }
+.section.dark .lead { color: var(--band-soft); }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; counter-reset: step; list-style: none; padding: 0; margin: 0; position: relative; }
+.steps::before { content: ""; position: absolute; left: 26px; right: 12%; top: 26px; height: 2px; background: linear-gradient(90deg, var(--band-accent), var(--band-line)); }
+.step { counter-increment: step; display: grid; gap: 10px; align-content: start; position: relative; min-width: 0; }
+.step::before { content: counter(step); width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--band-2); color: var(--band-accent); border: 2px solid var(--band-accent); font: 700 20px/1 var(--display); position: relative; z-index: 1; margin-bottom: 8px; }
+.step p { color: var(--band-soft); font-size: 16px; }
+.step em { font-style: normal; font: 500 13px/1.4 var(--mono); color: var(--band-accent); }
+@media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; } .steps::before { display: none; } }
 @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
 
 /* pricing */
@@ -214,9 +230,17 @@ textarea { min-height: 96px; resize: vertical; }
 @media (max-width: 900px) { .audit .wrap { grid-template-columns: 1fr; } }
 @media (max-width: 520px) { .row2 { grid-template-columns: 1fr; } }
 
+/* whatsapp */
+.wa { position: fixed; z-index: 40; right: calc(18px + env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  display: inline-flex; align-items: center; gap: 9px; padding: 13px 18px 13px 15px; border-radius: 99px; background: var(--wa); color: var(--on-wa);
+  font: 700 16px/1 var(--body); text-decoration: none; box-shadow: 0 10px 28px rgba(0,0,0,.28); transition: transform .15s ease; }
+.wa:hover { transform: translateY(-2px); }
+.walink { color: var(--accent); font-weight: 600; }
+@media (max-width: 520px) { .wa span { display: none; } .wa { padding: 15px; } }
+
 /* footer */
 footer { background: var(--band); color: var(--band-soft); border-top: 1px solid var(--band-line); font-size: 14px; }
-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; padding-block: 28px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; padding-block: 28px 96px; }
 footer nav { display: flex; flex-wrap: wrap; gap: 18px; }
 footer a { text-decoration: none; }
 footer a:hover { color: var(--band-fg); }
@@ -256,6 +280,16 @@ footer a:hover { color: var(--band-fg); }
           <li>Store stays in your name</li>
           <li>Monthly profit report</li>
         </ul>
+        <div class="platforms">
+          <span>We manage stores on</span>
+          <ul>
+            <li class="main">eBay <small>Specialty</small></li>
+            <li>Amazon</li>
+            <li>Walmart</li>
+            <li>Temu</li>
+            <li>OnBuy</li>
+          </ul>
+        </div>
       </div>
 
       <aside class="health" aria-label="Example account health card">
@@ -349,17 +383,17 @@ footer a:hover { color: var(--band-fg); }
     </div>
   </section>
 
-  <section class="section" id="process">
+  <section class="section dark" id="process">
     <div class="wrap">
       <div class="head">
         <p class="eyebrow">How it works</p>
         <h2>From free audit to monthly profit split</h2>
       </div>
       <ol class="steps">
-        <li class="step"><h3>Free audit</h3><p>Send your store link. We check 10 points and email you what we would change.</p></li>
-        <li class="step"><h3>Setup</h3><p>You pay the $200 start fee. We set up sourcing, tools and the first product plan.</p></li>
-        <li class="step"><h3>Daily management</h3><p>Our team runs listings, orders, messages and account health every day.</p></li>
-        <li class="step"><h3>Monthly report</h3><p>You get the month's sales, costs and profit. The profit is split 50/50.</p></li>
+        <li class="step"><h3>Free audit</h3><p>Send your store link. We check 10 points and email you what we would change.</p><em>✓ Free, no obligation</em></li>
+        <li class="step"><h3>Setup</h3><p>You pay the $200 start fee. We set up sourcing, tools and the first product plan.</p><em>✓ One-time $200</em></li>
+        <li class="step"><h3>Daily management</h3><p>Our team runs listings, orders, messages and account health every day.</p><em>✓ Handled by our team</em></li>
+        <li class="step"><h3>Monthly report</h3><p>You get the month's sales, costs and profit. The profit is split 50/50.</p><em>✓ Every number shared</em></li>
       </ol>
     </div>
   </section>
@@ -451,6 +485,7 @@ footer a:hover { color: var(--band-fg); }
           <a class="chip" id="youtubeLink" href="#">▶ Watch on YouTube</a>
           <a class="chip" id="riselancerLink" href="#">Hire me on Riselancer</a>
           <a class="chip" href="https://x.com/AgeMirza">X @AgeMirza</a>
+          <a class="chip" href="https://www.instagram.com/ecommercewith.mirza/">Instagram</a>
         </div>
       </div>
     </div>
@@ -468,7 +503,7 @@ footer a:hover { color: var(--band-fg); }
         <details><summary>Does the store stay in my name?</summary><p>Yes. The eBay account and the money in it stay yours. We work on the store as your managers.</p></details>
         <details><summary>Do you only work with eBay?</summary><p>eBay US is our main focus. We also manage Amazon, Walmart and Temu stores for sellers who already sell there.</p></details>
         <details><summary>What do you need from me to start?</summary><p>Your store link for the audit. If you decide to go ahead, access to the store and agreement on the product plan.</p></details>
-        <details><summary>How do I reach you?</summary><p>Email support@eplacestores.com or use the audit form below. You can also message me on X or Riselancer.</p></details>
+        <details><summary>How do I reach you?</summary><p>Message us on WhatsApp at +92 307 6668879, email support@eplacestores.com, or use the audit form below. You can also reach me on X or Riselancer.</p></details>
       </div>
     </div>
   </section>
@@ -516,6 +551,7 @@ footer a:hover { color: var(--band-fg); }
         <button class="btn btn-primary" type="submit">Send my audit request</button>
         <p class="form-note">We reply by email. Or write to us directly:</p>
         <div class="copyline"><code id="emailText">support@eplacestores.com</code><button class="copybtn" type="button" id="copyEmail">Copy</button></div>
+        <p class="form-note">WhatsApp: <a class="walink" href="https://wa.me/923076668879?text=Hi%20Umar%2C%20I%20found%20eplacestores.com%20and%20want%20help%20with%20my%20eBay%20store." target="_blank" rel="noopener">+92 307 6668879</a></p>
         <p class="status" id="formStatus" hidden></p>
       </form>
     </div>
@@ -530,12 +566,19 @@ footer a:hover { color: var(--band-fg); }
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
       <a href="https://x.com/AgeMirza">X</a>
+      <a href="https://www.instagram.com/ecommercewith.mirza/">Instagram</a>
+      <a href="https://wa.me/923076668879?text=Hi%20Umar%2C%20I%20found%20eplacestores.com%20and%20want%20help%20with%20my%20eBay%20store.">WhatsApp</a>
     </nav>
   </div>
 </footer>
 
+<a class="wa" href="https://wa.me/923076668879?text=Hi%20Umar%2C%20I%20found%20eplacestores.com%20and%20want%20help%20with%20my%20eBay%20store." target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 3C6.9 3 3 6.6 3 11c0 2.2 1 4.2 2.7 5.6L5 21l4.3-2.2c.9.2 1.8.3 2.7.3 5.1 0 9-3.6 9-8s-3.9-8-9-8zm-4 7.2h8v1.6H8v-1.6zm0-3h8v1.6H8V7.2zm0 6h5v1.6H8v-1.6z"/></svg>
+  <span>Chat with us</span>
+</a>
+
 <script>
-const CONTACT = { email: "support@eplacestores.com", riselancer: "https://www.riselancer.com/u/23903545-60a3-470a-8004-210285f4b7c5", youtube: "https://www.youtube.com/@waterworldwonders-eo3ml" };
+const CONTACT = { email: "support@eplacestores.com", riselancer: "https://www.riselancer.com/u/23903545-60a3-470a-8004-210285f4b7c5", youtube: "https://www.youtube.com/@UmarMirzaEcom" };
 document.getElementById("riselancerLink").href = CONTACT.riselancer;
 document.getElementById("youtubeLink").href = CONTACT.youtube;
 
